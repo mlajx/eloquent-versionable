@@ -15,12 +15,7 @@ class VersionablePersistenceTest extends TestCase
         $dummy = Dummy::first();
         $versionedDummy = DummyVersioning::where('id', $dummy->id)->first();
 
-        $this->assertEquals($dummy->id, $versionedDummy->id);
-        $this->assertEquals($dummy->name, $versionedDummy->name);
-        $this->assertEquals($dummy->created_at, $versionedDummy->created_at);
-        $this->assertEquals($dummy->updated_at, $versionedDummy->updated_at);
-
-        $this->assertNull($dummy->deleted_at);
+        $this->assertVersioning($dummy, $versionedDummy);
 
         $this->assertNotNull($versionedDummy->_id);
         $this->assertNull($versionedDummy->next);
@@ -47,10 +42,7 @@ class VersionablePersistenceTest extends TestCase
         $this->assertEquals($secondVersionedDummy->name, 'updated');
         $this->assertEquals($secondVersionedDummy->next, $thirdVersionedDummy->updated_at);
 
-        $this->assertEquals($dummy->id, $thirdVersionedDummy->id);
-        $this->assertEquals($dummy->name, $thirdVersionedDummy->name);
-        $this->assertEquals($dummy->created_at, $thirdVersionedDummy->created_at);
-        $this->assertEquals($dummy->updated_at, $thirdVersionedDummy->updated_at);
+        $this->assertVersioning($dummy, $thirdVersionedDummy);
         $this->assertNotNull($thirdVersionedDummy->_id);
         $this->assertNull($thirdVersionedDummy->next);
         $this->assertNull($thirdVersionedDummy->deleted_at);
@@ -71,18 +63,13 @@ class VersionablePersistenceTest extends TestCase
             ->withTrashed()
             ->first();
 
-        $this->assertNotNull($dummy->deleted_at);
-
         $this->assertEquals($firstVersionedDummy->name, '1');
         $this->assertEquals($firstVersionedDummy->next, $secondVersionedDummy->updated_at);
 
         $this->assertEquals($secondVersionedDummy->name, 'updated');
         $this->assertEquals($secondVersionedDummy->next, $thirdVersionedDummy->updated_at);
 
-        $this->assertEquals($dummy->id, $thirdVersionedDummy->id);
-        $this->assertEquals($dummy->name, $thirdVersionedDummy->name);
-        $this->assertEquals($dummy->created_at, $thirdVersionedDummy->created_at);
-        $this->assertEquals($dummy->updated_at, $thirdVersionedDummy->updated_at);
+        $this->assertVersioning($dummy, $thirdVersionedDummy);
         $this->assertNotNull($thirdVersionedDummy->_id);
         $this->assertNull($thirdVersionedDummy->next);
         $this->assertNotNull($thirdVersionedDummy->deleted_at);
