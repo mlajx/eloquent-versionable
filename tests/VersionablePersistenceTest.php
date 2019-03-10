@@ -2,7 +2,7 @@
 
 namespace Cohrosonline\EloquentVersionable\Test;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Dummy;
+use Cohrosonline\EloquentVersionable\Test\Models\Employee;
 
 class VersionablePersistenceTest extends TestCase
 {
@@ -10,20 +10,20 @@ class VersionablePersistenceTest extends TestCase
     /** @test */
     public function it_creates_versioning_register_on_model_create()
     {
-        $dummy = Dummy::first();
-        $versioned = $this->getVersioned($dummy->id);
+        $employee = Employee::first();
+        $versioned = $this->getVersioned($employee);
 
-        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(0));
+        $this->assertOriginalEqualsVersioning($employee, $versioned->get(0));
     }
 
     /** @test */
     public function it_creates_versioning_register_on_model_update()
     {
-        $dummy = Dummy::first();
-        $dummy->update(['name' => 'updated']);
-        $dummy->update(['name' => 'updated again']);
+        $employee = Employee::first();
+        $this->update($employee, ['name' => 'updated']);
+        $this->update($employee, ['name' => 'updated 2']);
 
-        $versioned = $this->getVersioned($dummy->id);
+        $versioned = $this->getVersioned($employee);
 
         $this->assertEquals($versioned->get(0)->name, '1');
         $this->assertEquals($versioned->get(0)->next, $versioned->get(1)->updated_at);
@@ -31,18 +31,18 @@ class VersionablePersistenceTest extends TestCase
         $this->assertEquals($versioned->get(1)->name, 'updated');
         $this->assertEquals($versioned->get(1)->next, $versioned->get(2)->updated_at);
 
-        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(2));
+        $this->assertOriginalEqualsVersioning($employee, $versioned->get(2));
         $this->assertNull($versioned->get(2)->deleted_at);
     }
 
     /** @test */
     public function it_works_with_soft_delete()
     {
-        $dummy = Dummy::first();
-        $dummy->update(['name' => 'updated']);
-        $dummy->delete();
+        $employee = Employee::first();
+        $this->update($employee, ['name' => 'updated']);
+        $employee->delete();
 
-        $versioned = $this->getVersioned($dummy->id);
+        $versioned = $this->getVersioned($employee);
 
         $this->assertEquals($versioned->get(0)->name, '1');
         $this->assertEquals($versioned->get(0)->next, $versioned->get(1)->updated_at);
@@ -50,7 +50,7 @@ class VersionablePersistenceTest extends TestCase
         $this->assertEquals($versioned->get(1)->name, 'updated');
         $this->assertEquals($versioned->get(1)->next, $versioned->get(2)->updated_at);
 
-        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(2));
+        $this->assertOriginalEqualsVersioning($employee, $versioned->get(2));
         $this->assertNotNull($versioned->get(2)->deleted_at);
     }
 }

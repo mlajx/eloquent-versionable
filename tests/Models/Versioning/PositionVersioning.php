@@ -2,13 +2,13 @@
 
 namespace Cohrosonline\EloquentVersionable\Test\Models\Versioning;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Dummy;
+use Cohrosonline\EloquentVersionable\Test\Models\Employee;
 
-class DummyVersioning extends Dummy
+class PositionVersioning extends Employee
 {
     protected $versioningEnabled = false;
 
     protected $primaryKey = "_id";
 
-    protected $table = 'dummies_versioning';
+    protected $table = 'positions_versioning';
 }

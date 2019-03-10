@@ -28,20 +28,20 @@ class VersionableScope implements Scope
                     $q->orWhereNull($model->getQualifiedNxtColumn());
                 });
 
-//            $joins = $builder->getQuery()->joins ?? [];
-//            if (count($joins) > 0) {
-//                foreach ($joins as $join) {
-//                    if (strpos($join->table, '_versioning') !== false) {
-//                        // @todo change to modified_at and deleted_at of model
-//                        $builder->where($join->table . '.modified_at', '<=', $datetime)
-//                            ->whereNull($join->table . '.deleted_at')
-//                            ->where(function (Builder $q) use ($datetime, $join) {
-//                                $q->where($join->table . '.next', '>', $datetime);
-//                                $q->orWhereNull($join->table . '.next');
-//                            });
-//                    }
-//                }
-//            }
+            $joins = $builder->getQuery()->joins ?? [];
+            if (count($joins) > 0) {
+                foreach ($joins as $join) {
+                    if (strpos($join->table, '_versioning') !== false) {
+                        // @todo change to modified_at and deleted_at of model
+                        $builder->where($join->table . '.modified_at', '<=', $datetime)
+                            ->whereNull($join->table . '.deleted_at')
+                            ->where(function (Builder $q) use ($datetime, $join) {
+                                $q->where($join->table . '.next', '>', $datetime);
+                                $q->orWhereNull($join->table . '.next');
+                            });
+                    }
+                }
+            }
         }
     }
 }

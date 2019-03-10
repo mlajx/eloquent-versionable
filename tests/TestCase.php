@@ -3,8 +3,10 @@
 namespace Cohrosonline\EloquentVersionable\Test;
 
 use Carbon\Carbon;
-use Cohrosonline\EloquentVersionable\Test\Models\Dummy;
-use Cohrosonline\EloquentVersionable\Test\Models\Versioning\DummyVersioning;
+use Cohrosonline\EloquentVersionable\Test\Models\Employee;
+use Cohrosonline\EloquentVersionable\Test\Models\DummyBelongsTo;
+use Cohrosonline\EloquentVersionable\Test\Models\Position;
+use Cohrosonline\EloquentVersionable\Test\Models\Versioning\EmployeeVersioning;
 use Cohrosonline\EloquentVersionable\VersioningServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -46,7 +48,28 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
-        $this->app['db']->connection()->getSchemaBuilder()->create('dummies', function (Blueprint $table) {
+        $this->app['db']->connection()->getSchemaBuilder()->create('employees', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('position_id');
+            $table->string('name');
+
+            $table->foreign('position_id')->on('id')->references('positions');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        $this->app['db']->connection()->getSchemaBuilder()->create('employees_versioning', function (Blueprint $table) {
+            $table->increments('_id');
+            $table->unsignedInteger('id');
+            $table->unsignedInteger('position_id');
+            $table->string('name');
+
+            $table->timestamps();
+            $table->dateTime('next')->nullable();
+            $table->softDeletes();
+        });
+
+        $this->app['db']->connection()->getSchemaBuilder()->create('positions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
 
@@ -54,7 +77,7 @@ abstract class TestCase extends Orchestra
             $table->softDeletes();
         });
 
-        $this->app['db']->connection()->getSchemaBuilder()->create('dummies_versioning', function (Blueprint $table) {
+        $this->app['db']->connection()->getSchemaBuilder()->create('positions_versioning', function (Blueprint $table) {
             $table->increments('_id');
             $table->unsignedInteger('id');
             $table->string('name');
@@ -65,14 +88,19 @@ abstract class TestCase extends Orchestra
         });
 
         collect(range(1, 3))->each(function (int $i) {
-            Dummy::create(['name' => $i]);
+            Position::create(['name' => $i]);
+        });
+
+        $position = Position::first();
+        collect(range(1, 3))->each(function (int $i) use ($position) {
+            Employee::create(['name' => $i, 'position_id' => $position->id]);
         });
     }
 
-    protected function update($dummy, $attributes)
+    protected function update($entity, $attributes)
     {
         Carbon::setTestNow(Carbon::now()->addSecond());
-        $dummy->update($attributes);
+        $entity->update($attributes);
     }
 
     protected function setFakeNow($time = '2019-01-01 12:00:00')
@@ -94,11 +122,11 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param $id
-     * @return DummyVersioning|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     * @param $entity
+     * @return EmployeeVersioning|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
      */
-    protected function getVersioned($id)
+    protected function getVersioned($entity)
     {
-        return DummyVersioning::withoutGlobalScopes()->where('id', $id)->get();
+        return $entity->withoutGlobalScopes()->where('id', $entity->id)->get();
     }
 }
