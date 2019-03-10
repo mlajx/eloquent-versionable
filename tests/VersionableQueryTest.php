@@ -32,12 +32,12 @@ class VersionableQueryTest extends TestCase
         $dummyModel = new Dummy;
         $dummyModel->unsetVersioning();
         $dummy = $dummyModel->withTrashed()->first();
-        $versionedDummy = Dummy::withoutGlobalScopes()->skip(2)->find($dummy->id);
+        $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versionedDummy);
+        $this->assertVersioning($dummy, $versioned->get(2));
 
-        $this->assertNotNull($versionedDummy->_id);
-        $this->assertNull($versionedDummy->next);
+        $this->assertNotNull($versioned->get(2)->_id);
+        $this->assertNull($versioned->get(2)->next);
     }
 
     /** @test */
@@ -62,14 +62,14 @@ class VersionableQueryTest extends TestCase
     {
         $this->setFakeNow('2019-01-01 12:00:01');
         $dummy = Dummy::updateOrCreate(['id' => '999'], ['name' => 'new dummy']);
-        $versionedDummy = Dummy::withoutGlobalScopes()->find($dummy->id);
+        $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versionedDummy);
+        $this->assertVersioning($dummy, $versioned->get(0));
 
         $dummy = Dummy::updateOrCreate(['id' => '999'], ['name' => 'updated dummy']);
-        $versionedDummy = Dummy::withoutGlobalScopes()->skip(1)->find($dummy->id);
+        $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versionedDummy);
+        $this->assertVersioning($dummy, $versioned->get(1));
     }
 
     // @todo method first does not return id 1 after it was updated and set deleted_at in versioning

@@ -4,6 +4,7 @@ namespace Cohrosonline\EloquentVersionable\Test;
 
 use Carbon\Carbon;
 use Cohrosonline\EloquentVersionable\Test\Models\Dummy;
+use Cohrosonline\EloquentVersionable\Test\Models\Versioning\DummyVersioning;
 use Cohrosonline\EloquentVersionable\VersioningServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -14,8 +15,8 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->setUpDatabase();
         $this->setFakeNow('2019-01-01 12:00:00');
+        $this->setUpDatabase();
     }
 
     /**
@@ -87,5 +88,14 @@ abstract class TestCase extends Orchestra
         $this->assertEquals($original->created_at, $versioned->created_at);
         $this->assertEquals($original->updated_at, $versioned->updated_at);
         $this->assertEquals($original->deleted_at, $versioned->deleted_at);
+    }
+
+    /**
+     * @param $id
+     * @return DummyVersioning|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     */
+    protected function getVersioned($id)
+    {
+        return DummyVersioning::withoutGlobalScopes()->where('id', $id)->get();
     }
 }
