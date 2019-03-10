@@ -13,11 +13,7 @@ class VersionablePersistenceTest extends TestCase
         $dummy = Dummy::first();
         $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versioned->get(0));
-
-        $this->assertNotNull($versioned->get(0)->_id);
-        $this->assertNull($versioned->get(0)->next);
-        $this->assertNull($versioned->get(0)->deleted_at);
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(0));
     }
 
     /** @test */
@@ -35,9 +31,7 @@ class VersionablePersistenceTest extends TestCase
         $this->assertEquals($versioned->get(1)->name, 'updated');
         $this->assertEquals($versioned->get(1)->next, $versioned->get(2)->updated_at);
 
-        $this->assertVersioning($dummy, $versioned->get(2));
-        $this->assertNotNull($versioned->get(2)->_id);
-        $this->assertNull($versioned->get(2)->next);
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(2));
         $this->assertNull($versioned->get(2)->deleted_at);
     }
 
@@ -56,9 +50,7 @@ class VersionablePersistenceTest extends TestCase
         $this->assertEquals($versioned->get(1)->name, 'updated');
         $this->assertEquals($versioned->get(1)->next, $versioned->get(2)->updated_at);
 
-        $this->assertVersioning($dummy, $versioned->get(2));
-        $this->assertNotNull($versioned->get(2)->_id);
-        $this->assertNull($versioned->get(2)->next);
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(2));
         $this->assertNotNull($versioned->get(2)->deleted_at);
     }
 }

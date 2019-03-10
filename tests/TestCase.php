@@ -81,13 +81,16 @@ abstract class TestCase extends Orchestra
         return Carbon::setTestNow($time);
     }
 
-    protected function assertVersioning($original, $versioned)
+    protected function assertOriginalEqualsVersioning($original, $versioned)
     {
         $this->assertEquals($original->id, $versioned->id);
         $this->assertEquals($original->name, $versioned->name);
         $this->assertEquals($original->created_at, $versioned->created_at);
         $this->assertEquals($original->updated_at, $versioned->updated_at);
         $this->assertEquals($original->deleted_at, $versioned->deleted_at);
+
+        $this->assertNotNull($versioned->_id);
+        $this->assertNull($versioned->next);
     }
 
     /**

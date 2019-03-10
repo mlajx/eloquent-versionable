@@ -19,7 +19,7 @@ class VersionableQueryTest extends TestCase
         $dummy = $dummyModel->first();
         $versionedDummy = Dummy::find($dummy->id);
 
-        $this->assertVersioning($dummy, $versionedDummy);
+        $this->assertOriginalEqualsVersioning($dummy, $versionedDummy);
     }
 
     /** @test */
@@ -34,10 +34,7 @@ class VersionableQueryTest extends TestCase
         $dummy = $dummyModel->withTrashed()->first();
         $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versioned->get(2));
-
-        $this->assertNotNull($versioned->get(2)->_id);
-        $this->assertNull($versioned->get(2)->next);
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(2));
     }
 
     /** @test */
@@ -64,12 +61,12 @@ class VersionableQueryTest extends TestCase
         $dummy = Dummy::updateOrCreate(['id' => '999'], ['name' => 'new dummy']);
         $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versioned->get(0));
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(0));
 
         $dummy = Dummy::updateOrCreate(['id' => '999'], ['name' => 'updated dummy']);
         $versioned = $this->getVersioned($dummy->id);
 
-        $this->assertVersioning($dummy, $versioned->get(1));
+        $this->assertOriginalEqualsVersioning($dummy, $versioned->get(1));
     }
 
     // @todo method first does not return id 1 after it was updated and set deleted_at in versioning
