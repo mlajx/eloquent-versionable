@@ -1,13 +1,13 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test;
+namespace Kiqstyle\EloquentVersionable\Test;
 
 use Carbon\Carbon;
-use Cohrosonline\EloquentVersionable\Test\Models\Employee;
-use Cohrosonline\EloquentVersionable\Test\Models\DummyBelongsTo;
-use Cohrosonline\EloquentVersionable\Test\Models\Position;
-use Cohrosonline\EloquentVersionable\Test\Models\Versioning\EmployeeVersioning;
-use Cohrosonline\EloquentVersionable\VersioningServiceProvider;
+use Kiqstyle\EloquentVersionable\Test\Models\Employee;
+use Kiqstyle\EloquentVersionable\Test\Models\DummyBelongsTo;
+use Kiqstyle\EloquentVersionable\Test\Models\Position;
+use Kiqstyle\EloquentVersionable\Test\Models\Versioning\EmployeeVersioning;
+use Kiqstyle\EloquentVersionable\VersioningServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 

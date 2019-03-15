@@ -1,18 +1,18 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test\Models;
+namespace Kiqstyle\EloquentVersionable\Test\Models;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Versioning\EmployeeVersioning;
-use Cohrosonline\EloquentVersionable\Versionable;
-use Cohrosonline\EloquentVersionable\VersionableContract;
-use Cohrosonline\EloquentVersionable\VersionedModel;
+use Kiqstyle\EloquentVersionable\Test\Models\Versioning\EmployeeVersioning;
+use Kiqstyle\EloquentVersionable\Versionable;
+use Kiqstyle\EloquentVersionable\VersionableContract;
+use Kiqstyle\EloquentVersionable\VersionedModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Employee
- * @package Cohrosonline\EloquentVersionable\Test\Models
+ * @package Kiqstyle\EloquentVersionable\Test\Models
  * @mixin Model
  * @mixin Builder
  */

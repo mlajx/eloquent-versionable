@@ -1,6 +1,6 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable;
+namespace Kiqstyle\EloquentVersionable;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable;
+namespace Kiqstyle\EloquentVersionable;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Versioning\DummyVersioning;
+use Kiqstyle\EloquentVersionable\Test\Models\Versioning\DummyVersioning;
 use Illuminate\Support\Str;
 
 trait Versionable

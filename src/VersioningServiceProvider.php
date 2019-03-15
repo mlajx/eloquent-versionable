@@ -1,6 +1,6 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable;
+namespace Kiqstyle\EloquentVersionable;
 
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;

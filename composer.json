@@ -1,5 +1,5 @@
 {
-    "name": "cohros/eloquent-versionable",
+    "name": "kiqstyle/eloquent-versionable",
     "description": "Versioning behaviour for eloquent models",
     "authors": [
         {
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Cohrosonline\\EloquentVersionable\\": "src/"
+            "Kiqstyle\\EloquentVersionable\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cohrosonline\\EloquentVersionable\\Test\\": "tests"
+            "Kiqstyle\\EloquentVersionable\\Test\\": "tests"
         }
     }
 }

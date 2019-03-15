@@ -1,14 +1,14 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test\Models\Versioning;
+namespace Kiqstyle\EloquentVersionable\Test\Models\Versioning;
 
-use Cohrosonline\EloquentVersionable\Test\Models\PositionCompetency;
+use Kiqstyle\EloquentVersionable\Test\Models\PositionCompetency;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class PositionCompetency
- * @package Cohrosonline\EloquentVersionable\Test\Models
+ * @package Kiqstyle\EloquentVersionable\Test\Models
  * @mixin Model
  * @mixin Builder
  */

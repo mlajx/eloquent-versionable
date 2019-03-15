@@ -1,12 +1,12 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test;
+namespace Kiqstyle\EloquentVersionable\Test;
 
-use Cohrosonline\EloquentVersionable\SyncManyToManyWithVersioning;
-use Cohrosonline\EloquentVersionable\Test\Models\Competency;
-use Cohrosonline\EloquentVersionable\Test\Models\Employee;
-use Cohrosonline\EloquentVersionable\Test\Models\Position;
-use Cohrosonline\EloquentVersionable\Test\Models\PositionCompetency;
+use Kiqstyle\EloquentVersionable\SyncManyToManyWithVersioning;
+use Kiqstyle\EloquentVersionable\Test\Models\Competency;
+use Kiqstyle\EloquentVersionable\Test\Models\Employee;
+use Kiqstyle\EloquentVersionable\Test\Models\Position;
+use Kiqstyle\EloquentVersionable\Test\Models\PositionCompetency;
 
 class VersionableQueryTest extends TestCase
 {

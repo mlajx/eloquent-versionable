@@ -1,8 +1,8 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test\Models\Versioning;
+namespace Kiqstyle\EloquentVersionable\Test\Models\Versioning;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Employee;
+use Kiqstyle\EloquentVersionable\Test\Models\Employee;
 
 class EmployeeVersioning extends Employee
 {

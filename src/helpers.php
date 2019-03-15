@@ -1,6 +1,6 @@
 <?php
 
-use Cohrosonline\EloquentVersionable\VersioningDate;
+use Kiqstyle\EloquentVersionable\VersioningDate;
 
 if (!function_exists('versioningDate')) {
     /**

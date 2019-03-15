@@ -1,8 +1,8 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test\Models\Versioning;
+namespace Kiqstyle\EloquentVersionable\Test\Models\Versioning;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Position;
+use Kiqstyle\EloquentVersionable\Test\Models\Position;
 
 class PositionVersioning extends Position
 {

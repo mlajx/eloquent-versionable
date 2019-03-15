@@ -1,15 +1,15 @@
 <?php
 
-namespace Cohrosonline\EloquentVersionable\Test\Models;
+namespace Kiqstyle\EloquentVersionable\Test\Models;
 
-use Cohrosonline\EloquentVersionable\Test\Models\Versioning\CompetencyVersioning;
-use Cohrosonline\EloquentVersionable\VersionedModel;
+use Kiqstyle\EloquentVersionable\Test\Models\Versioning\CompetencyVersioning;
+use Kiqstyle\EloquentVersionable\VersionedModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Competency
- * @package Cohrosonline\EloquentVersionable\Test\Models
+ * @package Kiqstyle\EloquentVersionable\Test\Models
  * @mixin Model
  * @mixin Builder
  */
