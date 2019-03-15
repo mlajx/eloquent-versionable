@@ -50,7 +50,7 @@ abstract class TestCase extends Orchestra
     {
         $this->app['db']->connection()->getSchemaBuilder()->create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('position_id');
+            $table->unsignedInteger('position_id')->nullable();
             $table->string('name');
 
             $table->foreign('position_id')->on('id')->references('positions');
@@ -61,7 +61,7 @@ abstract class TestCase extends Orchestra
         $this->app['db']->connection()->getSchemaBuilder()->create('employees_versioning', function (Blueprint $table) {
             $table->increments('_id');
             $table->unsignedInteger('id');
-            $table->unsignedInteger('position_id');
+            $table->unsignedInteger('position_id')->nullable();
             $table->string('name');
 
             $table->timestamps();
