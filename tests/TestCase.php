@@ -87,6 +87,46 @@ abstract class TestCase extends Orchestra
             $table->softDeletes();
         });
 
+        $this->app['db']->connection()->getSchemaBuilder()->create('competencies', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        $this->app['db']->connection()->getSchemaBuilder()->create('competencies_versioning', function (Blueprint $table) {
+            $table->increments('_id');
+            $table->unsignedInteger('id');
+            $table->string('name');
+
+            $table->timestamps();
+            $table->dateTime('next')->nullable();
+            $table->softDeletes();
+        });
+
+        $this->app['db']->connection()->getSchemaBuilder()->create('position_competency', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('position_id');
+            $table->unsignedInteger('competency_id');
+
+            $table->foreign('position_id')->on('id')->references('positions');
+            $table->foreign('competency_id')->on('id')->references('competencies');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        $this->app['db']->connection()->getSchemaBuilder()->create('position_competency_versioning', function (Blueprint $table) {
+            $table->increments('_id');
+            $table->unsignedInteger('id');
+            $table->unsignedInteger('position_id');
+            $table->unsignedInteger('competency_id');
+
+            $table->timestamps();
+            $table->dateTime('next')->nullable();
+            $table->softDeletes();
+        });
+
         collect(range(1, 3))->each(function (int $i) {
             Position::create(['name' => $i]);
         });

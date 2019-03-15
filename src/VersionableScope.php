@@ -32,8 +32,8 @@ class VersionableScope implements Scope
             if (count($joins) > 0) {
                 foreach ($joins as $join) {
                     if (strpos($join->table, '_versioning') !== false) {
-                        // @todo change to modified_at and deleted_at of model
-                        $builder->where($join->table . '.modified_at', '<=', $datetime)
+                        // @todo change to updated_at and deleted_at of model
+                        $builder->where($join->table . '.updated_at', '<=', $datetime)
                             ->whereNull($join->table . '.deleted_at')
                             ->where(function (Builder $q) use ($datetime, $join) {
                                 $q->where($join->table . '.next', '>', $datetime);

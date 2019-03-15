@@ -20,4 +20,6 @@ class PositionCompetency extends VersionedModel
     const VERSIONED_TABLE = 'position_competency_versioning';
 
     protected $table = 'position_competency';
+
+    protected $guarded = [];
 }

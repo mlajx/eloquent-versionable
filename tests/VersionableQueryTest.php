@@ -2,8 +2,11 @@
 
 namespace Cohrosonline\EloquentVersionable\Test;
 
+use Cohrosonline\EloquentVersionable\SyncManyToManyWithVersioning;
+use Cohrosonline\EloquentVersionable\Test\Models\Competency;
 use Cohrosonline\EloquentVersionable\Test\Models\Employee;
 use Cohrosonline\EloquentVersionable\Test\Models\Position;
+use Cohrosonline\EloquentVersionable\Test\Models\PositionCompetency;
 
 class VersionableQueryTest extends TestCase
 {
@@ -112,5 +115,33 @@ class VersionableQueryTest extends TestCase
         $this->assertEquals($employee->position->id, 1);
         $this->assertEquals($employee->position->name, 'updated');
         $this->assertNotNull($employee->position->next);
+    }
+
+    /** @test */
+    public function it_finds_versioned_results_with_many_to_many_relationship_based_on_versioning_date()
+    {
+        $position = Position::first();
+        $competencies = collect(range(1, 3))->map(function (int $i) {
+            return Competency::create(['name' => $i]);
+        });
+
+        (new SyncManyToManyWithVersioning)->run($position, $competencies->pluck('id')->toArray(), new PositionCompetency, ['entityKey' => 'position_id', 'relationKey' => 'competency_id']);
+
+        $now = $this->setFakeNow('2019-01-01 12:00:01');
+        versioningDate()->setDate($now);
+        $competencies = collect(range(1, 3))->map(function (int $i) {
+            return Competency::create(['name' => $i]);
+        });
+
+        (new SyncManyToManyWithVersioning)->run($position, $competencies->pluck('id')->toArray(), new PositionCompetency, ['entityKey' => 'position_id', 'relationKey' => 'competency_id']);
+
+        $now = $this->setFakeNow('2019-01-01 12:00:00');
+        versioningDate()->setDate($now);
+
+        $position = Position::first();
+        $this->assertCount(3, $position->competencies);
+        $this->assertEquals(1, $position->competencies->get(0)->id);
+        $this->assertEquals(2, $position->competencies->get(1)->id);
+        $this->assertEquals(3, $position->competencies->get(2)->id);
     }
 }
