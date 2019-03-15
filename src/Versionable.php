@@ -114,7 +114,7 @@ trait Versionable
      *
      * @return string
      */
-    public function getNxtColumn()
+    public function getNextColumn()
     {
         return ($this::NEXT_COLUMN !== null) ? $this::NEXT_COLUMN : 'next';
     }
@@ -126,7 +126,7 @@ trait Versionable
      */
     public function getQualifiedNxtColumn()
     {
-        return $this->getVersioningTable() . '.' . $this->getNxtColumn();
+        return $this->getVersioningTable() . '.' . $this->getNextColumn();
     }
 
     /**

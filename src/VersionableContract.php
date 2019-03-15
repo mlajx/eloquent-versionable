@@ -14,7 +14,7 @@ interface VersionableContract
 
     public function getVersioningTable();
 
-    public function getNxtColumn();
+    public function getNextColumn();
 
     public function now();
 }
