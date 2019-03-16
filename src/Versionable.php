@@ -63,9 +63,13 @@ trait Versionable
 
     public function getOriginalTable()
     {
-        return isset($this->table)
-            ? $this->table
-            : Str::snake(Str::pluralStudly(class_basename($this)));
+        if (! isset($this->table)) {
+            return str_replace(
+                '\\', '', Str::snake(Str::plural(class_basename($this)))
+            );
+        }
+
+        return $this->table;
     }
 
     /**
