@@ -22,7 +22,7 @@ class VersionableScope implements Scope
             $datetime = versioningDate()->getDate()->format('Y-m-d H:i:s');
 
             $builder->where($model->getVersioningTable() . '.' . $model->getUpdatedAtColumn(), '<=', $datetime)
-                ->whereNull($model->getVersioningTable() . '.deleted_at')
+                ->whereNull($model->getVersioningTable() . '.' . $model->getDeletedAtColumn())
                 ->where(function (Builder $q) use ($datetime, $model) {
                     $q->where($model->getQualifiedNxtColumn(), '>', $datetime);
                     $q->orWhereNull($model->getQualifiedNxtColumn());
