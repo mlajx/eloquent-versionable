@@ -18,15 +18,15 @@ class VersioningPersistence
             ->first();
         $lastVersioned->timestamps = false;
 
-        $lastVersioned->update(['next' => $model->updated_at]);
+        $lastVersioned->update(['next' => $model->{$model->getUpdatedAtColumn()}]);
     }
 
     public static function createDeletedVersionedRecord(Model $model)
     {
         $versionedInstance = self::getVersionedModel($model);
         $versionedInstance->fill($model->getAttributes());
-        $versionedInstance->updated_at = $model->updated_at;
-        $versionedInstance->deleted_at = $model->updated_at;
+        $versionedInstance->{$versionedInstance->getUpdatedAtColumn()} = $model->{$model->getUpdatedAtColumn()};
+        $versionedInstance->{$versionedInstance->getDeletedAtColumn()} = $model->{$model->getUpdatedAtColumn()};
         $versionedInstance->save();
     }
 
