@@ -11,5 +11,7 @@ class VersionedModel extends Model implements VersionableContract
 
     const NEXT_COLUMN = "next";
 
+    const VERSIONED_TABLE = null;
+
     protected $versioningEnabled = true;
 }

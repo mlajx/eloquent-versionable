@@ -110,7 +110,7 @@ trait Versionable
      */
     public function getVersioningTable()
     {
-        return ($this::VERSIONED_TABLE !== null) ? $this::VERSIONED_TABLE : $this->table . '_versioning';
+        return $this::VERSIONED_TABLE !== null ? $this::VERSIONED_TABLE : $this->getOriginalTable() . '_versioning';
     }
 
     /**
