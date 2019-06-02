@@ -18,12 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Employee extends VersionedModel
 {
-    const VERSIONING_MODEL = EmployeeVersioning::class;
-
-    const VERSIONED_TABLE = 'employees_versioning';
-
-    protected $guarded = [];
-
     public function position()
     {
         return $this->belongsTo(Position::class);

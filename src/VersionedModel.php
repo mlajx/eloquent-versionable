@@ -13,5 +13,9 @@ class VersionedModel extends Model implements VersionableContract
 
     const VERSIONED_TABLE = null;
 
+    const VERSIONING_MODEL = null;
+
     protected $versioningEnabled = true;
+
+    protected $guarded = [];
 }

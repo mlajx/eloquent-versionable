@@ -15,12 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Position extends VersionedModel
 {
-    const VERSIONING_MODEL = PositionVersioning::class;
-
-    const VERSIONED_TABLE = 'positions_versioning';
-
-    protected $guarded = [];
-
     public function competencies()
     {
         $pivot = new PositionCompetency;

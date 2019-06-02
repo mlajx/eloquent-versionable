@@ -2,9 +2,9 @@
 
 namespace Kiqstyle\EloquentVersionable\Test\Models\Versioning;
 
-use Kiqstyle\EloquentVersionable\Test\Models\Employee;
+use Kiqstyle\EloquentVersionable\Test\Models\Competency;
 
-class CompetencyVersioning extends Employee
+class CompetencyVersioning extends Competency
 {
     protected $versioningEnabled = false;
 

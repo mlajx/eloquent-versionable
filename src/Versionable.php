@@ -4,6 +4,7 @@ namespace Kiqstyle\EloquentVersionable;
 
 use Kiqstyle\EloquentVersionable\Test\Models\Versioning\DummyVersioning;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 trait Versionable
 {
@@ -93,21 +94,17 @@ trait Versionable
         $this->versioningEnabled = false;
     }
 
-    /**
-     * Get the name of the column for applying the scope.
-     *
-     * @return string
-     */
     public function getVersioningModel()
     {
-        return ($this::VERSIONING_MODEL !== null) ? $this::VERSIONING_MODEL : get_class($this) . 'Versioning';
+        return ($this::VERSIONING_MODEL !== null) ? $this::VERSIONING_MODEL : $this->guessVersioningClassName();
     }
 
-    /**
-     * Get the name of the column for applying the scope.
-     *
-     * @return string
-     */
+    private function guessVersioningClassName()
+    {
+        $class = new ReflectionClass(get_class($this));
+        return $class->getNamespaceName() . '\\Versioning\\'  . $class->getShortName(). 'Versioning';
+    }
+
     public function getVersioningTable()
     {
         return $this::VERSIONED_TABLE !== null ? $this::VERSIONED_TABLE : $this->getOriginalTable() . '_versioning';

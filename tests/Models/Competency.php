@@ -15,12 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Competency extends VersionedModel
 {
-    const VERSIONING_MODEL = CompetencyVersioning::class;
-
-    const VERSIONED_TABLE = 'competencies_versioning';
-
-    protected $guarded = [];
-
     public function positions()
     {
         return $this->belongsToMany(Position::class)

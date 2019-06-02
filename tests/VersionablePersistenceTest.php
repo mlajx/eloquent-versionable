@@ -105,7 +105,6 @@ class VersionablePersistenceTest extends TestCase
         (new SyncManyToManyWithVersioning)->run($position, $competencies->pluck('id')->toArray(), new PositionCompetency, ['entityKey' => 'position_id', 'relationKey' => 'competency_id']);
         $position = Position::with('competencies')->first();
 
-        $databaseRegisters = DB::select('select * from position_competency');
         $this->assertCount(3, $position->competencies);
         $this->assertEquals(4, $position->competencies->get(0)->id);
         $this->assertEquals(5, $position->competencies->get(1)->id);

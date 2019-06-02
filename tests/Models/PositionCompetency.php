@@ -15,11 +15,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PositionCompetency extends VersionedModel
 {
-    const VERSIONING_MODEL = PositionCompetencyVersioning::class;
-
-    const VERSIONED_TABLE = 'position_competency_versioning';
-
     protected $table = 'position_competency';
-
-    protected $guarded = [];
 }
