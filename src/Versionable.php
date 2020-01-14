@@ -13,13 +13,13 @@ trait Versionable
         static::addGlobalScope(new VersionableScope());
 
         static::saved(function ($model) {
-            if ($model->isVersioningEnabled()) {
+            if ($model->isVersioningEnabled() && $model->isDirty()) {
                 VersioningPersistence::createVersionedRecord($model);
             }
         });
 
         static::updated(function ($model) {
-            if ($model->isVersioningEnabled()) {
+            if ($model->isVersioningEnabled() && $model->isDirty()) {
                 VersioningPersistence::updateNextColumnOfLastVersionedRegister($model);
             }
         });
