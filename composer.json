@@ -33,6 +33,13 @@
             "src/helpers.php"
         ]
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kiqstyle\\EloquentVersionable\\VerioningServiceProvider"
+            ]
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "Kiqstyle\\EloquentVersionable\\Test\\": "tests"
